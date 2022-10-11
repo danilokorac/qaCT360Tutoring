@@ -10,6 +10,7 @@ public class SeleniumDemo {
         WebDriver webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         webDriver.get("http://www.youtube.com");
+        System.out.println(webDriver.getTitle());
         Thread.sleep(2000);
         webDriver.quit();
     }
