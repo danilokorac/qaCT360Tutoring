@@ -28,10 +28,11 @@ public class TestCaseTwo {
     }
 
     @Test
-    public void testCaseTwo() {
+    public void testCaseTwo() /*throws InterruptedException*/ {
 
+        // Browser setup and login on website
         driver.get("https://www.saucedemo.com");
-        driver.manage().window().setSize(new Dimension(1055,810));
+        driver.manage().window().setSize(new Dimension(1055, 810));
         //Thread.sleep(1000);
         driver.findElement(By.id("user-name")).click();
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
@@ -47,11 +48,13 @@ public class TestCaseTwo {
         String description = driver.findElement(By.xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[2]")).getText();
         float price = Float.parseFloat(driver.findElement(By.xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[3]")).getText().substring(1));
 
+        // Title, description and price check
         Assert.assertEquals(title, "Sauce Labs Backpack");
         Assert.assertEquals(description, "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.");
         // (expected - actual) > 0.01 -> Error!
         Assert.assertEquals(price, 29.99, 0.01);
 
+        // Adding product to cart and proceeding to checkout
         driver.findElement(By.cssSelector("#add-to-cart-sauce-labs-backpack")).click();
         driver.findElement(By.cssSelector("#back-to-products")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"item_5_title_link\"]/div")));
@@ -61,6 +64,7 @@ public class TestCaseTwo {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"checkout\"]")));
         driver.findElement(By.xpath("//*[@id=\"checkout\"]")).click();
 
+        // Order checkout information input
         driver.findElement(By.id("first-name")).click();
         driver.findElement(By.id("first-name")).sendKeys("Danilo");
         driver.findElement(By.id("last-name")).click();
@@ -68,6 +72,7 @@ public class TestCaseTwo {
         driver.findElement(By.id("postal-code")).click();
         driver.findElement(By.id("postal-code")).sendKeys("36000");
 
+        // Finishing order and verifying that required text is displayed
         driver.findElement(By.xpath("//*[@id=\"continue\"]")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"finish\"]")));
         driver.findElement(By.xpath("//*[@id=\"finish\"]")).click();
@@ -75,12 +80,12 @@ public class TestCaseTwo {
         String completedOrder = driver.findElement(By.className("complete-header")).getText();
         Assert.assertEquals(completedOrder, "THANK YOU FOR YOUR ORDER");
 
+        // Logout
         driver.findElement(By.id("react-burger-menu-btn")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout_sidebar_link")));
         driver.findElement(By.id("logout_sidebar_link")).click();
 
     }
-
 
 
 }

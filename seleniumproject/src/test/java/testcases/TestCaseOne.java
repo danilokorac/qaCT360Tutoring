@@ -22,6 +22,7 @@ public class TestCaseOne {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\dkorac\\Downloads\\chromedriver.exe");
         driver = new ChromeDriver();
     }
+
     @AfterTest
     public void tearDown() {
         driver.quit();
@@ -30,8 +31,9 @@ public class TestCaseOne {
     @Test
     public void testCaseOne() /*throws InterruptedException*/ {
 
+        // Browser setup and login on website
         driver.get("https://www.saucedemo.com");
-        driver.manage().window().setSize(new Dimension(1055,810));
+        driver.manage().window().setSize(new Dimension(1055, 810));
         driver.findElement(By.id("user-name")).click();
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.id("password")).click();
@@ -51,12 +53,12 @@ public class TestCaseOne {
         Assert.assertTrue(burgerMenu);
 
         // Twitter, Facebook, LinkedIn elements (links) check
-       String twitterLink = driver.findElement(By.xpath("//*[@id=\"page_wrapper\"]/footer/ul/li[1]/a")).getDomAttribute("href");
-       Assert.assertEquals(twitterLink, "https://twitter.com/saucelabs");
-       String facebookLink = driver.findElement(By.xpath("//*[@id=\"page_wrapper\"]/footer/ul/li[2]/a")).getDomAttribute("href");
-       Assert.assertEquals(facebookLink, "https://www.facebook.com/saucelabs");
-       String linkedinLink = driver.findElement(By.xpath("//*[@id=\"page_wrapper\"]/footer/ul/li[3]/a")).getDomAttribute("href");
-       Assert.assertEquals(linkedinLink, "https://www.linkedin.com/company/sauce-labs/");
+        String twitterLink = driver.findElement(By.xpath("//*[@id=\"page_wrapper\"]/footer/ul/li[1]/a")).getDomAttribute("href");
+        Assert.assertEquals(twitterLink, "https://twitter.com/saucelabs");
+        String facebookLink = driver.findElement(By.xpath("//*[@id=\"page_wrapper\"]/footer/ul/li[2]/a")).getDomAttribute("href");
+        Assert.assertEquals(facebookLink, "https://www.facebook.com/saucelabs");
+        String linkedinLink = driver.findElement(By.xpath("//*[@id=\"page_wrapper\"]/footer/ul/li[3]/a")).getDomAttribute("href");
+        Assert.assertEquals(linkedinLink, "https://www.linkedin.com/company/sauce-labs/");
 
 
         // Logout check
@@ -64,7 +66,6 @@ public class TestCaseOne {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout_sidebar_link")));
         String logout = driver.findElement(By.id("logout_sidebar_link")).getText();
-        // System.out.println(logout);
         Assert.assertEquals(logout, "LOGOUT");
 
     }
