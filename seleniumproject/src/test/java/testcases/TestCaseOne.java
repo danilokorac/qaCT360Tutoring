@@ -4,10 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class TestCaseOne {
 
@@ -24,18 +28,15 @@ public class TestCaseOne {
     }
 
     @Test
-    public void testCaseOne() throws InterruptedException {
+    public void testCaseOne() /*throws InterruptedException*/ {
 
         driver.get("https://www.saucedemo.com");
         driver.manage().window().setSize(new Dimension(1055,810));
-        Thread.sleep(1000);
         driver.findElement(By.id("user-name")).click();
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.id("password")).click();
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
         driver.findElement(By.id("login-button")).click();
-
-        Thread.sleep(1000);
 
         // Header name check
         String header = driver.findElement(By.cssSelector("#header_container > div.header_secondary_container > span")).getText();
@@ -60,7 +61,8 @@ public class TestCaseOne {
 
         // Logout check
         driver.findElement(By.id("react-burger-menu-btn")).click();
-        Thread.sleep(500);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout_sidebar_link")));
         String logout = driver.findElement(By.id("logout_sidebar_link")).getText();
         // System.out.println(logout);
         Assert.assertEquals(logout, "LOGOUT");

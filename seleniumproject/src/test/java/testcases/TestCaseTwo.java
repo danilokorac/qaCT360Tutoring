@@ -24,7 +24,7 @@ public class TestCaseTwo {
 
     @AfterTest
     public void tearDown() {
-        //driver.quit();
+        driver.quit();
     }
 
     @Test
@@ -41,7 +41,7 @@ public class TestCaseTwo {
 
         // Verification of title, description and price on given item
         driver.findElement(By.cssSelector("#item_4_title_link > div")).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[1]")));
         String title = driver.findElement(By.xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[1]")).getText();
         String description = driver.findElement(By.xpath("//*[@id=\"inventory_item_container\"]/div/div/div[2]/div[2]")).getText();
@@ -76,6 +76,7 @@ public class TestCaseTwo {
         Assert.assertEquals(completedOrder, "THANK YOU FOR YOUR ORDER");
 
         driver.findElement(By.id("react-burger-menu-btn")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout_sidebar_link")));
         driver.findElement(By.id("logout_sidebar_link")).click();
 
     }
